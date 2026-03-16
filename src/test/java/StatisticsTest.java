@@ -1,77 +1,81 @@
-import org.junit.jupiter.api.Test;
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
-public class StatisticsTest {
+import org.junit.jupiter.api.Test;
+
+/** Unit tests for the Date class. */
+public class DateTest {
 
   @Test
-  void maximumValueReturnsTheRightValue() {
+  void givenValidDate_whenValidating_thenTrue() {
     // Arrange
-    Statistics statistics = new Statistics();
-    double[] numbers = {3.5, 2.0, 10.5, 1.2, 9.4};
-    double expectedValue = 10.5;
+    Date validDate = new Date(15, 3, 2021);
 
     // Act
-    double obtainedValue = statistics.maximumValue(numbers);
+    boolean isValid = validDate.validate();
 
     // Assert
-    assertEquals(expectedValue, obtainedValue);
+    assertTrue(isValid, "Date should be valid");
   }
 
   @Test
-  void maximumValueRaisesAnExceptionIfTheArrayIsEmpty() {
+  void givenDateWithInvalidYear_whenValidating_thenFalse() {
     // Arrange
-    Statistics statistics = new Statistics();
-    double[] numbers = {};
-
-    // Act & Assert
-    assertThrows(IllegalArgumentException.class, () -> statistics.maximumValue(numbers));
-  }
-
-  @Test
-  void meanReturnsTheRightValue() {
-    // Arrange
-    Statistics statistics = new Statistics();
-    double[] numbers = {1.0, 2.0, 3.0, 4.0, 5.0};
-    double expectedValue = 3.0;
+    Date invalidYearDate = new Date(10, 10, 1850);
 
     // Act
-    double obtainedValue = statistics.mean(numbers);
+    boolean isValid = invalidYearDate.validate();
 
     // Assert
-    assertEquals(expectedValue, obtainedValue);
+    assertFalse(isValid, "Date with year out of valid range should be invalid");
   }
 
   @Test
-  void meanRaisesAnExceptionIfTheArrayIsEmpty() {
+  void givenDateWithInvalidMonth_whenValidating_thenFalse() {
     // Arrange
-    Statistics statistics = new Statistics();
-    double[] numbers = {};
-
-    // Act & Assert
-    assertThrows(IllegalArgumentException.class, () -> statistics.mean(numbers));
-  }
-
-  @Test
-  void minimumValueReturnsTheRightValue() {
-    // Arrange
-    Statistics statistics = new Statistics();
-    double[] numbers = {3.5, 2.0, 7.8, 1.2, 9.4};
-    double expectedValue = 1.2;
+    Date invalidMonthDate = new Date(1, 13, 2020);
 
     // Act
-    double obtainedValue = statistics.minimumValue(numbers);
+    boolean isValid = invalidMonthDate.validate();
 
     // Assert
-    assertEquals(expectedValue, obtainedValue);
+    assertFalse(isValid, "Date with month out of valid range should be invalid");
   }
 
   @Test
-  void minimumValueRaisesAnExceptionIfTheArrayIsEmpty() {
+  void givenDateWithInvalidDay_whenValidating_thenFalse() {
     // Arrange
-    Statistics statistics = new Statistics();
-    double[] numbers = {};
+    Date invalidDayDate = new Date(32, 1, 2020);
 
-    // Act & Assert
-    assertThrows(IllegalArgumentException.class, () -> statistics.minimumValue(numbers));
+    // Act
+    boolean isValid = invalidDayDate.validate();
+
+    // Assert
+    assertFalse(isValid, "Date with day out of valid range should be invalid");
+  }
+
+  @Test
+  void givenLeapYearDate_whenValidating_thenTrue() {
+    // Arrange
+    Date leapYearDate = new Date(29, 2, 2020);
+
+    // Act
+    boolean isValid = leapYearDate.validate();
+
+    // Assert
+    assertTrue(isValid, "Date should be valid in a leap year");
+  }
+
+  @Test
+  void givenNonLeapYearDate_whenValidating_thenFalse() {
+    // Arrange
+    Date nonLeapYearDate = new Date(29, 2, 2019);
+
+    // Act
+    boolean isValid = nonLeapYearDate.validate();
+
+    // Assert
+    assertFalse(isValid, "Date should be invalid in a non-leap year");
   }
 }
