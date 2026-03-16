@@ -62,4 +62,7 @@ public class Statistics {
     }
     return sum / arrayOfNumbers.length;
   }
+  public void methodAddedByOwner() {
+    System.out.println("Method added by the owner");
+  }
 }
